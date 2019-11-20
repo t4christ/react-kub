@@ -7,6 +7,7 @@ env:
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install: 
 
+  - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
   - echo "$AZURE_PASSWORD" | az login -u "$AZURE_USERNAME" --password-stdin
   - az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
