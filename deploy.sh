@@ -13,6 +13,6 @@ docker push texplode/worker:$SHA
 
 
 kubectl apply -f  k8s
-kubectl set image deployments/server-deployment server=texplode/server:$SHA
-kubectl set image deployments/client-deployment client=texplode/client:$SHA
-kubectl set image deployments/worker-deployment worker=texplode/worker:$SHA
+kubectl set image deployments/server-deployment server=stephengrider/multi-server:$SHA
+kubectl set image deployments/client-deployment client=stephengrider/multi-client:$SHA
+kubectl set image deployments/worker-deployment worker=stephengrider/multi-worker:$SHA
