@@ -12,6 +12,16 @@ docker push texplode/server:$SHA
 docker push texplode/worker:$SHA
 
 
+
+
+
+# Create user account, service account and clusterbindingrole for kubernetes cluster
+kubectl create service account --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --service=kube-system:tiller
+helm init --service-account tiller --upgrade
+
+
+# Apply kubernetes configuration
 kubectl apply -f  k8s
 kubectl set image deployments/server-deployment server=stephengrider/multi-server:$SHA
 kubectl set image deployments/client-deployment client=stephengrider/multi-client:$SHA
