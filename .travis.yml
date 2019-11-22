@@ -10,6 +10,7 @@ before_install:
   - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
   - az login --service-principal -u $appID --password $password --tenant $tenant
   - az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
+  - az aks install-cli
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t t4christ/react-kubernetes -f ./docker-react/Dockerfile.dev ./docker-react
 
