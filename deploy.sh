@@ -14,6 +14,7 @@ docker push texplode/worker:$SHA
 
 
 
+helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
 
 # Create user account, service account and clusterbindingrole for kubernetes cluster
 kubectl create service account --namespace kube-system tiller

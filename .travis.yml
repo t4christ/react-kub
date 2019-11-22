@@ -14,7 +14,6 @@ before_install:
   - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get_helm.sh
   - chmod 700 get_helm.sh
   - ./get_helm.sh
-  - helm install stable/nginx-ingress  my-nginx --set rbac.create=true
   - chmod +x ./kubectl
   - sudo mv ./kubectl /usr/local/bin/kubectl
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
