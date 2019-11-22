@@ -10,7 +10,9 @@ before_install:
   - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
   - az login --service-principal -u $appID --password $password --tenant $tenant
   - az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
-  - az aks install-cli
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  - sudo mv ./kubectl /usr/local/bin/kubectl
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t t4christ/react-kubernetes -f ./docker-react/Dockerfile.dev ./docker-react
 
