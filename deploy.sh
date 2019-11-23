@@ -14,7 +14,6 @@ docker push texplode/worker:$SHA
 
 
 
-helm repo update
 helm install stable/nginx-ingress --generate-name --set rbac.create=true
 
 # Create user account, service account and clusterbindingrole for kubernetes cluster
