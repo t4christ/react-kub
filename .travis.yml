@@ -15,7 +15,8 @@ before_install:
   - chmod +x ./kubectl
   - sudo mv ./kubectl /usr/local/bin/kubectl
   - kubectl apply -f helm-rbac.yaml
-  - helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
+  - kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud-generic.yaml
+  # - helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
   # - helm init --service-account tiller --upgrade
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t t4christ/react-kubernetes -f ./docker-react/Dockerfile.dev ./docker-react

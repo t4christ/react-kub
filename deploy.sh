@@ -21,6 +21,18 @@ docker push texplode/worker:$SHA
 
 
 
+# certificates to secure the connection between Helm (client side) and Tiller (server side) with SSL/TLS
+
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+openssl req -key ca.key.pem -new -x509 -days 7300 -sha256 -out ca.cert.pem -extensions v3_ca
+openssl genrsa -out ./tiller.key.pem 4096
+openssl genrsa -out ./helm.key.pem 4096
+openssl req -key tiller.key.pem -new -sha256 -out tiller.csr.pem
+openssl req -key helm.key.pem -new -sha256 -out helm.csr.pem
+openssl x509 -req -CA ca.cert.pem -CAkey ca.key.pem -CAcreateserial -in tiller.csr.pem -out tiller.cert.pem -days 365
+openssl x509 -req -CA ca.cert.pem -CAkey ca.key.pem -CAcreateserial -in helm.csr.pem -out helm.cert.pem  -days 365
+helm init --tiller-tls --tiller-tls-cert ./tiller.cert.pem --tiller-tls-key ./tiller.key.pem --tiller-tls-verify --tls-ca-cert ca.cert.pem
+
 # Apply kubernetes configuration
 kubectl apply -f  k8s
 kubectl set image deployments/server-deployment server=stephengrider/multi-server:$SHA
