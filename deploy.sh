@@ -33,6 +33,13 @@ openssl x509 -req -CA ca.cert.pem -CAkey ca.key.pem -CAcreateserial -in tiller.c
 openssl x509 -req -CA ca.cert.pem -CAkey ca.key.pem -CAcreateserial -in helm.csr.pem -out helm.cert.pem  -days 365
 helm init --tiller-tls --tiller-tls-cert ./tiller.cert.pem --tiller-tls-key ./tiller.key.pem --tiller-tls-verify --tls-ca-cert ca.cert.pem
 
+cp ca.cert.pem $HELM_HOME/ca.pem
+cp helm.cert.pem $HELM_HOME/cert.pem
+cp helm.key.pem $HELM_HOME/key.pem
+
+helm install stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2 --tls
+kubectl get svc --all-namespaces
+
 # Apply kubernetes configuration
 kubectl apply -f  k8s
 kubectl set image deployments/server-deployment server=stephengrider/multi-server:$SHA
