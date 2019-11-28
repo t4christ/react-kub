@@ -17,7 +17,7 @@ before_install:
   - kubectl apply -f helm-rbac.yaml
   - helm init --service-account=tiller --history-max 300
   - helm init --service-account=tiller --tiller-image=gcr.io/kubernetes-helm/tiller:v2.14.1 --history-max 300
-  - helm delete nginx-ingress 
+  # - helm delete nginx-ingress 
   - helm install stable/nginx-ingress --name my-nginx  --set rbac.create=true
   # - helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
   # - helm init --service-account tiller --upgrade
