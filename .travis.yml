@@ -12,13 +12,12 @@ before_install:
   - az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
   - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
   - curl -L https://git.io/get_helm.sh | bash
-  # - sudo snap install helm --classic
   - chmod +x ./kubectl
   - sudo mv ./kubectl /usr/local/bin/kubectl
   - kubectl apply -f helm-rbac.yaml
   - helm init --service-account=tiller --history-max 300
   - helm init --service-account=tiller --tiller-image=gcr.io/kubernetes-helm/tiller:v2.14.1 --history-max 300
-  - helm install stable/nginx-ingress --name nginx-ingress
+  - helm install stable/nginx-ingress --name nginx-ingress  --set rbac.create=true
   # - helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
   # - helm init --service-account tiller --upgrade
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
