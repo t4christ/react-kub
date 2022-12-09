@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "express": " *",
+        "express": "*",
         "pg": "*",
         "redis": "*",
         "cors": "*",
